@@ -1,5 +1,9 @@
 package database;
 
+import java.util.Map;
+
+import org.bson.types.ObjectId;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
@@ -8,8 +12,32 @@ import com.mongodb.DBObject;
 
 public class Queries {
 	
+	public static String createWalking(Map<String, Object> walking) {
+		DBCollection walkings = DAO.get().getWalkings();
+		DBObject w = new BasicDBObject(walking);
+		walkings.save(w);
+		return w.get("_id").toString();
+	}
 	
-	public static String createWalking(String name, String descr, Integer level) {
+	public static String createPoi(String id, Map<String, Object> poi) {
+		poi.put("walkingId", id);
+		DBCollection pois = DAO.get().getPois();
+		DBObject p = new BasicDBObject(poi);
+		pois.save(p);
+		return p.get("_id").toString();
+	}
+	
+	public static DBObject getPoi(String id) {
+		DBCollection pois = DAO.get().getPois();
+		DBObject p = new BasicDBObject("_id", new ObjectId(id));
+		DBObject out = pois.findOne(p);
+		out.put("id", out.get("_id").toString());
+		out.removeField("_id");
+		return out;
+	}
+	
+	
+	/*public static String createWalking(String name, String descr, Long level) {
 		DBCollection walkings = DAO.get().getWalkings();
 
 		DBObject w = new BasicDBObject("name", name);
