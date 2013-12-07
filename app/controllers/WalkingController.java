@@ -13,13 +13,19 @@ public class WalkingController extends Controller {
 
     public static Result createWalking() {  
     	
-    	String name = Req.get(request(), "name");
-    	String descr = Req.get(request(), "description");
-    	Integer level = Integer.valueOf(Req.get(request(), "level"));
+    	try {
+        	String name = Req.get(request(), "name");
+        	String descr = Req.get(request(), "description");
+        	Integer level = Integer.valueOf(Req.get(request(), "level"));
+        	
+        	String id = Queries.createWalking(name, descr, level);
+        	
+            return ok(ResultObj.json(new KV("id", id)));
+    	}catch (Exception e){
+    		return internalServerError(ResultObj.json(new KV("err", e.getMessage())));
+    	}
     	
-    	String id = Queries.createWalking(name, descr, level);
-    	
-        return ok(ResultObj.json(new KV("id", id)));
+
     }
     
     
