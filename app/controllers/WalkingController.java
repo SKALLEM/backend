@@ -13,6 +13,8 @@ public class WalkingController extends Controller {
 
     public static Result createWalking() {  
     	
+    	System.out.println(request().body());
+    	
     	try {
         	String name = Req.get(request(), "name");
         	String descr = Req.get(request(), "description");
