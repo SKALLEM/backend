@@ -1,11 +1,14 @@
 package database;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.bson.types.ObjectId;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
 
@@ -34,6 +37,16 @@ public class Queries {
 		out.put("id", out.get("_id").toString());
 		out.removeField("_id");
 		return out;
+	}
+	
+	
+	public static List<DBObject> getPOIsByWalkingId(String walkingId) {
+		DBCollection pois = DAO.get().getPois();
+		DBObject q = new BasicDBObject("_id", new ObjectId(walkingId));
+
+		return pois.find(q).sort(new BasicDBObject("_id", 1)).toArray();
+
+
 	}
 	
 	

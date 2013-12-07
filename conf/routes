@@ -10,8 +10,9 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 
 POST	/walking					controllers.WalkingController.createWalking()
-POST	/poi/:walkingId					controllers.WalkingController.createPoi(walkingId:String)
+POST	/walking/:walkingId			controllers.WalkingController.createPOI(walkingId:String)
 
-GET		/poi/:id					controllers.WalkingController.getPoi(id:String)
+GET		/walking/:walkingId			controllers.WalkingController.getWalking(walkingId:String)
+GET		/poi/:poiId					controllers.WalkingController.getPoi(poiId:String)
 
 GET		/location/:lat/:lon			controllers.LocationController.location(lat:String,lon:String)

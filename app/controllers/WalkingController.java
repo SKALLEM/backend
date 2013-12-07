@@ -1,19 +1,17 @@
 package controllers;
 
 import java.util.HashMap;
+import java.util.List;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import play.mvc.Controller;
+import play.mvc.Result;
+import utils.KV;
+import utils.ResultObj;
+
 import com.google.gson.Gson;
 import com.mongodb.DBObject;
 
 import database.Queries;
-import play.libs.Json;
-import play.mvc.Controller;
-import play.mvc.Result;
-import utils.KV;
-import utils.Req;
-import utils.ResultObj;
-import views.html.index;
 
 public class WalkingController extends Controller {
 
@@ -57,8 +55,29 @@ public class WalkingController extends Controller {
 		}
 
 	}
+	
+	
+	public static Result getWalking(String walkingId) {
 
-	public static Result createPoi(String walkingId) {
+		try {
+
+			//String bodyString = request().body().asText();
+			
+			//HashMap<String, Object> walking = gson.fromJson(bodyString, HashMap.class);
+			
+			List<DBObject> pois = Queries.getPOIsByWalkingId(walkingId);
+
+			return ok(gson.toJson(pois));
+		} catch (Exception e) {
+			return internalServerError(ResultObj.json(new KV("err", e
+					.getClass())));
+		}
+
+	}
+
+	
+
+	public static Result createPOI(String walkingId) {
 
 		try {
 
