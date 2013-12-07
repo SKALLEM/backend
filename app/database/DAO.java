@@ -1,9 +1,12 @@
 package database;
 
-import com.mongodb.BasicDBObject;
+import play.Play;
+
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 
 
 public class DAO {
@@ -16,12 +19,14 @@ public class DAO {
 	DBCollection pois;
 
 	private DAO() {
+		String url = Play.application().configuration().getString("mongourl");
 		try {
-			m = new Mongo("127.0.0.1");
+			m = new MongoClient( new MongoClientURI(url) );
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-		db = m.getDB("explorer");
+
+		db = m.getDB(url.substring(1+url.lastIndexOf('/')));
 		users = db.getCollection("users");
 		
 		walkings = db.getCollection("walkings");
