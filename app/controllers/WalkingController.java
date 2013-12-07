@@ -25,7 +25,8 @@ public class WalkingController extends Controller {
 
 		try {
 
-			String bodyString = request().body().asText();
+			//System.out.println(request().body().asJson().toString());
+			String bodyString = request().body().asJson().toString();
 			
 			HashMap<String, Object> walking = gson.fromJson(bodyString, HashMap.class);
 			
@@ -61,7 +62,7 @@ public class WalkingController extends Controller {
 
 		try {
 
-			String bodyString = request().body().asText();
+			String bodyString = request().body().asJson().toString();
 			HashMap<String, Object> poi = gson.fromJson(bodyString, HashMap.class);
 			//JsonNode body = Json.parse(bodyString);
 /*
