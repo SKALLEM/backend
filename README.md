@@ -15,5 +15,5 @@ backend
 ### RUN
 
   Just open the project directory and type:
-  
+
     play run
