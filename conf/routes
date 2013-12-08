@@ -16,3 +16,8 @@ GET		/walking/:walkingId			controllers.WalkingController.getWalking(walkingId:St
 GET		/poi/:poiId					controllers.WalkingController.getPoi(poiId:String)
 
 GET		/location/:lat/:lon			controllers.LocationController.location(lat:String,lon:String)
+
+
+
+POST	/register					controllers.SessionController.register()
+POST	/login						controllers.SessionController.login()

@@ -2,6 +2,7 @@ package database;
 
 import play.Play;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
@@ -31,6 +32,9 @@ public class DAO {
 		
 		walkings = db.getCollection("walkings");
 		pois = db.getCollection("pois");
+		
+		
+		users.ensureIndex(new BasicDBObject("coords", "2d"));
 		
 	}
 	public static DAO get() {
