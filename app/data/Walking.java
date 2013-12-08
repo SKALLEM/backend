@@ -11,7 +11,7 @@ public class Walking extends GenericDataObject {
 	
 	String id;
 	String name, description;
-	Integer level;
+	Integer level, count;
 	
 	List<POI> pois;
 	
@@ -47,7 +47,12 @@ public class Walking extends GenericDataObject {
 		this.id = id;
 	}
 	
-	
+	public Integer getCount() {
+		return count;
+	}
+	public void setCount(Integer count) {
+		this.count = count;
+	}
 	@Override
 	public String toString() {
 		return "Walking [name=" + name + ", description=" + description

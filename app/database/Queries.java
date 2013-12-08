@@ -65,7 +65,7 @@ public class Queries {
 						POI.fromJson(Json.toJson(u).toString())
 					);
 		}
-		
+		walking.setCount(c.size());
 		return walking;
 	}
 	
@@ -139,14 +139,18 @@ public class Queries {
 	
 	
 	public static List<Walking> getWalking() throws Exception {
+		DBCollection pois = DAO.get().getPois();
 		List<Walking> result = new ArrayList<Walking>();
-		
 		DBCollection walkings = DAO.get().getWalkings();
 		DBCursor c = walkings.find();
 		for (DBObject w : c) {
 			w.put("id", w.get("_id").toString());
 			JsonNode jsn = Json.toJson(w);
 			Walking walking = Walking.fromJson(jsn.toString());
+			
+			
+			DBCursor pc = pois.find(new BasicDBObject("walkingId", w.get("id")));
+			walking.setCount(pc.size());
 			
 			result.add(walking);
 		}
