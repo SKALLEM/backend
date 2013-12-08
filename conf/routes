@@ -19,7 +19,7 @@ GET		/location/:lat/:lon			controllers.ExplorerController.location(lat:String,lo
 
 
 
-POST	/register					controllers.SessionController.register()
-POST	/login						controllers.SessionController.login()
+POST	/users/register				controllers.SessionController.register()
+POST	/users/login				controllers.SessionController.login()
 
 POST	/joinwalking/:walkingId		controllers.ExplorerController.joinWalking(walkingId:String)

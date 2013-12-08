@@ -14,7 +14,7 @@ import database.Queries;
 @Security.Authenticated(Secured.class)
 public class ExplorerController extends Controller {
 
-	public final static double radius = 10d/3959;
+	public final static double radius = 0.2d/3959;
 	
     public static Result location(String lat, String lon) {
 
