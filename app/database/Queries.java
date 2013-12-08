@@ -1,5 +1,6 @@
 package database;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -91,6 +92,70 @@ public class Queries {
 		
 	}
 	
+	public static boolean registerUser(String name, String username, String password) {
+		DBCollection users = DAO.get().getUsers();
+
+		DBObject q = new BasicDBObject("username", username);
+		if(users.findOne(q)==null) {
+			q.put("name", name);
+			q.put("password", password);
+			users.save(q);
+			return true;
+		}
+		return false;
+		
+	}
+	
+	public static void joinWalking(String user, String id) {
+		DBCollection users = DAO.get().getUsers();
+
+		DBObject q = new BasicDBObject("username", user);
+		DBObject u = users.findOne(q);
+		u.put("currentWalking", id);
+		users.save(u);
+		
+	}
+	
+	public static POI getClosePois(String walkingId, Double lat, Double lon, Double radius) throws Exception {
+		DBCollection pois = DAO.get().getPois();
+		
+		DBObject q = new BasicDBObject("loc", new BasicDBObject("$geoWithin", new BasicDBObject("$centerSphere", new Object[]{new Double[]{lat,lon},radius})));
+		q.put("walkingId", walkingId);
+		DBObject dbo = pois.findOne(q);
+		if(dbo==null)return null;
+		dbo.put("id", dbo.get("_id").toString());
+		return POI.fromJson(Json.toJson(dbo).toString());
+	}
+	
+	public static String getCurrentWalking(String user) throws Exception {
+		DBCollection users = DAO.get().getUsers();
+
+		DBObject q = new BasicDBObject("username", user);
+		DBObject u = users.findOne(q);
+		
+		return (u.get("currentWalking")!=null)?u.get("currentWalking").toString():"";
+	}
+	
+	
+	
+	public static List<Walking> getWalking() throws Exception {
+		List<Walking> result = new ArrayList<Walking>();
+		
+		DBCollection walkings = DAO.get().getWalkings();
+		DBCursor c = walkings.find();
+		for (DBObject w : c) {
+			w.put("id", w.get("_id").toString());
+			JsonNode jsn = Json.toJson(w);
+			Walking walking = Walking.fromJson(jsn.toString());
+			
+			result.add(walking);
+		}
+
+		return result;
+	}
+	
+	
+	
 	/*
 	
 	public static DBObject getPoi(String id) {
@@ -118,18 +183,7 @@ public class Queries {
 	
 	
 	
-	public static boolean registerUser(String name, String username, String password) {
-		DBCollection users = DAO.get().getUsers();
 
-		DBObject q = new BasicDBObject("username", username);
-		if(users.findOne(q)==null) {
-			q.put("name", name);
-			q.put("password", password);
-			return true;
-		}
-		return false;
-		
-	}
 	
 	public static boolean login(String username, String password) {
 		DBCollection users = DAO.get().getUsers();
@@ -141,16 +195,7 @@ public class Queries {
 	}
 	
 	
-	
-	public static DBObject getClosePois(Double lat, Double lon, Double radius) {
-		DBCollection pois = DAO.get().getPois();
-		
-		DBObject q = new BasicDBObject("loc", new BasicDBObject("$geoWithin", new BasicDBObject("$centerSphere", new Object[]{new Double[]{lat,lon},radius})));
 
-		return pois.findOne(q);
-		
-	}
-	
 	
 	
 	/*public static String createWalking(String name, String descr, Long level) {

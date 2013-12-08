@@ -8,16 +8,18 @@ GET     /                           controllers.Application.index()
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
-
+GET		/walking					controllers.WalkingController.getWalkingsList()
 POST	/walking					controllers.WalkingController.createWalking()
 POST	/walking/:walkingId			controllers.WalkingController.createPOI(walkingId:String)
 
 GET		/walking/:walkingId			controllers.WalkingController.getWalking(walkingId:String)
 GET		/poi/:poiId					controllers.WalkingController.getPoi(poiId:String)
 
-GET		/location/:lat/:lon			controllers.LocationController.location(lat:String,lon:String)
+GET		/location/:lat/:lon			controllers.ExplorerController.location(lat:String,lon:String)
 
 
 
 POST	/register					controllers.SessionController.register()
 POST	/login						controllers.SessionController.login()
+
+POST	/joinwalking/:walkingId		controllers.ExplorerController.joinWalking(walkingId:String)

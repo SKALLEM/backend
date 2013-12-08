@@ -1,5 +1,8 @@
 package controllers;
 
+import java.util.List;
+
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import utils.KV;
@@ -65,5 +68,20 @@ public class WalkingController extends Controller {
 		}
 
 	}
+	
+	public static Result getWalkingsList() {
+
+		try {
+			
+			List<Walking> ws = Queries.getWalking();
+			return ok(Json.toJson(ws));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return internalServerError(ResultObj.json(new KV("err", e
+					.getClass())));
+		}
+
+	}
+	
 
 }

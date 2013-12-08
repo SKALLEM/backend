@@ -62,7 +62,7 @@ public class POI extends GenericDataObject {
 	
 
 	public static void main(String[] args) throws Exception {
-		System.out.println(POI.toJson(POI.fromJson("{\"name\":\"test\",\"description\":\"description\",\"locationType\":\"locationType\",\"loc\":[1,3],\"question\":{\"points\":145,\"text\":\"dfdfjjkjkf\",\"answers\":[{\"text\":\"bla\",\"isCorrect\":true}]}}")));
+		System.out.println(POI.toJson(POI.fromJson("{\"name\":\"test\",\"description\":\"description\",\"locationType\":\"locationType\",\"coords\":[1.3,3.5],\"question\":{\"points\":145,\"text\":\"dfdfjjkjkf\",\"answers\":[{\"text\":\"bla\",\"isCorrect\":true}]}}")));
 	}
 	
 }

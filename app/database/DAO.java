@@ -18,7 +18,8 @@ public class DAO {
 	DBCollection users;
 	DBCollection walkings;
 	DBCollection pois;
-
+	DBCollection visited;
+	
 	private DAO() {
 		String url = Play.application().configuration().getString("mongourl");
 		try {
@@ -32,7 +33,7 @@ public class DAO {
 		
 		walkings = db.getCollection("walkings");
 		pois = db.getCollection("pois");
-		
+		visited = db.getCollection("visited");
 		
 		users.ensureIndex(new BasicDBObject("coords", "2d"));
 		
@@ -62,5 +63,7 @@ public class DAO {
 	public DBCollection getWalkings() {
 		return walkings;
 	}
-	
+	public DBCollection getVisited() {
+		return visited;
+	}
 }
